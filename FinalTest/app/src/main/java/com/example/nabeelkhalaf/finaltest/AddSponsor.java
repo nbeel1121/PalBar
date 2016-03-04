@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 public class AddSponsor extends ActionBarActivity {
 Button addS;
-EditText userName ,password,email,comapny , phoneNumberl ;
+EditText userName ,password,email,comapny , phoneNumber ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ EditText userName ,password,email,comapny , phoneNumberl ;
         userName = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
         email = (EditText)findViewById(R.id.email);
-        phoneNumberl = (EditText)findViewById(R.id.phoneNumber);
+        phoneNumber = (EditText)findViewById(R.id.phoneNumber);
         comapny = (EditText)findViewById(R.id.company);
 
         addS.setOnClickListener(new View.OnClickListener() {
@@ -29,15 +29,39 @@ EditText userName ,password,email,comapny , phoneNumberl ;
             public void onClick(View v) {
                 final JSONObject json = new JSONObject();
                 final String userNameT  = userName.getText().toString();
-                final String pass = password.getText().toString() ;
+                final String passwordT = password.getText().toString() ;
+                final String emailT =  email.getText().toString() ;
+                final String phoneNumberT = phoneNumber.getText().toString() ;
+                final String companyT = comapny.getText().toString() ;
+
                 try {
                     json.put("username", userNameT);
-                    json.put("password", pass);
+                    json.put("password", passwordT);
+                    json.put("email", email);
+                    json.put("phoneNumber",phoneNumberT);
+                    json.put("compay",companyT);
+
                 }
                 catch (JSONException e) {
                     e.printStackTrace();
                 }
+                HttpUtil.postRequest("http://192.168.1.116/phpP/addSponsor.php", json, new HttpUtil.HttpRequestCallBack() {
+                    @Override
+                    public void onSuccess(String response) {
+                        JSONObject jsonObj = null;
+                        try {
+                            jsonObj = new JSONObject(response);
+                            String message= jsonObj.getString("Message");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                });
             }
         });
     }

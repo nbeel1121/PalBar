@@ -59,7 +59,6 @@ public class Connect extends ActionBarActivity {
                             public void onSuccess(String response) {
                                 try {
                                     JSONObject jsonObj = new JSONObject(response);
-                                    Log.i("t",response);
                                     String userNameJson= jsonObj.getString("username");
                                     String passwordJson = jsonObj.getString("password");
                                     String  isAdmin = jsonObj.getString("isAdmin");
@@ -68,7 +67,6 @@ public class Connect extends ActionBarActivity {
                                             if(isAdmin.equals("0")){
                                                 startActivity(new Intent(getBaseContext(),Sponsor.class));
                                             }else{
-                                                Log.i("tttttttttt",response);
                                                 startActivity(new Intent(getBaseContext(),PalBarAdmin.class));
                                             }
 
